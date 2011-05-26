@@ -27,6 +27,7 @@
 void vfp_testing_entry(void);
 void vfp_support_entry(void);
 void vfp_null_entry(void);
+void vfp_sync_hwstate(struct thread_info*);
 
 void (*vfp_vector)(void) = vfp_null_entry;
 union vfp_state *last_VFP_context[NR_CPUS];
@@ -74,6 +75,14 @@ static void vfp_thread_exit(struct thread_info *thread)
 	put_cpu();
 }
 
+static void vfp_thread_copy(struct thread_info *thread)
+{
+       struct thread_info *parent = current_thread_info();
+
+       vfp_sync_hwstate(parent);
+       thread->vfpstate = parent->vfpstate;
+}
+
 /*
  * When this function is called with the following 'cmd's, the following
  * is true while this function is being run:
@@ -100,12 +109,17 @@ static void vfp_thread_exit(struct thread_info *thread)
 static int vfp_notifier(struct notifier_block *self, unsigned long cmd, void *v)
 {
 	struct thread_info *thread = v;
-
-	if (likely(cmd == THREAD_NOTIFY_SWITCH)) {
-		u32 fpexc = fmrx(FPEXC);
+	u32 fpexc;
+#ifdef CONFIG_SMP
+	unsigned int cpu;
+#endif
+	
+	switch (cmd) {
+	case THREAD_NOTIFY_SWITCH:
+		fpexc = fmrx(FPEXC);
 
 #ifdef CONFIG_SMP
-		unsigned int cpu = thread->cpu;
+		cpu = thread->cpu;
 
 		/*
 		 * On SMP, if VFP is enabled, save the old state in
@@ -130,13 +144,20 @@ static int vfp_notifier(struct notifier_block *self, unsigned long cmd, void *v)
 		 * old state.
 		 */
 		fmxr(FPEXC, fpexc & ~FPEXC_EN);
-		return NOTIFY_DONE;
-	}
+		break;
 
-	if (cmd == THREAD_NOTIFY_FLUSH)
+	case THREAD_NOTIFY_FLUSH:
 		vfp_thread_flush(thread);
-	else
+		break;
+	
+	case THREAD_NOTIFY_EXIT:
 		vfp_thread_exit(thread);
+		break;
+		
+	case THREAD_NOTIFY_COPY:
+		vfp_thread_copy(thread);
+		break;
+	}
 
 	return NOTIFY_DONE;
 }
