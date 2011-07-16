@@ -15,7 +15,6 @@
 #include <linux/syscalls.h>
 #include <linux/freezer.h>
 #include <linux/wakelock.h>
-#include "power.h"
 
 /* 
  * Timeout for stopping processes
@@ -122,10 +121,6 @@ int freeze_processes(void)
 	if (error)
 		goto Exit;
 	printk("done.\n");
-
-	error = suspend_sys_sync_wait();
-        if (error)
-                goto Exit;
 
 	printk("Freezing remaining freezable tasks ... ");
 	error = try_to_freeze_tasks(false);
