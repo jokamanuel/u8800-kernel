@@ -128,7 +128,7 @@ static unsigned int sample_rate_jiffies;
  * Minimum Freqeuncy delta when ramping up.
  * zero disables and causes to always jump straight to max frequency.
  */
-#define DEFAULT_RAMP_UP_STEP 460800
+#define DEFAULT_RAMP_UP_STEP 614400
 static unsigned int ramp_up_step;
 
 /*
@@ -141,18 +141,18 @@ static unsigned int ramp_down_step;
 /*
  * CPU freq will be increased if measured load > max_cpu_load;
  */
-#define DEFAULT_MAX_CPU_LOAD 65
+#define DEFAULT_MAX_CPU_LOAD 45
 static unsigned long max_cpu_load;
 
-#define DEFAULT_X_CPU_LOAD 80
+#define DEFAULT_X_CPU_LOAD 70
 static unsigned long x_cpu_load;
 
 /*
  * CPU freq will be decreased if measured load < min_cpu_load;
  */
-#define DEFAULT_MIN_CPU_LOAD 35
+#define DEFAULT_MIN_CPU_LOAD 25
 static unsigned long min_cpu_load;
-#define RAPID_MIN_CPU_LOAD 10
+#define RAPID_MIN_CPU_LOAD 5
 static unsigned long rapid_min_cpu_load;
 
 
@@ -820,5 +820,5 @@ static void __exit cpufreq_brazilianwax_exit(void)
 module_exit(cpufreq_brazilianwax_exit);
 
 MODULE_AUTHOR ("Erasmux/imoseyon");
-MODULE_DESCRIPTION ("'cpufreq_brazilianwax' - A smart cpufreq governor optimized for the DHD!");
+MODULE_DESCRIPTION ("'cpufreq_brazilianwax' - A smart cpufreq governor optimized for the hero!");
 MODULE_LICENSE ("GPL");
