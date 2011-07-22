@@ -423,16 +423,16 @@ static void __init lpj_init(void)
 void __init pll2_1024mhz_fixup(void)
 {
 #ifdef CONFIG_JESUS_PHONE
-	if (acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-9].acpu_clk_khz != 806400
-		  || freq_table[ARRAY_SIZE(freq_table)-9].frequency != 806400) {
+	if (acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-2].acpu_clk_khz != 806400
+		  || freq_table[ARRAY_SIZE(freq_table)-2].frequency != 806400) {
 		pr_err("Frequency table fixups for PLL2 rate failed.\n");
 		BUG();
 	}
-	acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-12].acpu_clk_khz = 1017000;
-	acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-12].vdd_mv = 1200;
-	acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-12].vdd_raw = VDD_RAW(1200);
-	acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-12].msmc1 = HIGH;
-	freq_table[ARRAY_SIZE(freq_table)-9].frequency = 1017000;
+	acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-2].acpu_clk_khz = 1017000;
+	acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-2].vdd_mv = 1200;
+	acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-2].vdd_raw = VDD_RAW(1200);
+	acpu_freq_tbl[ARRAY_SIZE(acpu_freq_tbl)-2].msmc1 = HIGH;
+	freq_table[ARRAY_SIZE(freq_table)-2].frequency = 1017000;
 
 
 
