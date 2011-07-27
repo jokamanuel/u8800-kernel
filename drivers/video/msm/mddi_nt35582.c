@@ -135,6 +135,7 @@ static int __init nt35582_init(void)
 		return 0;
 	MDDI_LCD_DEBUG("------nt35582_init------\n");
 	
+//	mddi_get_client_id();
 	ret = platform_driver_register(&this_driver);
 	if (!ret) {
 		pinfo = &nt35582_panel_data.panel_info;
@@ -149,14 +150,25 @@ static int __init nt35582_init(void)
  */
 /* change 24bit into 16bit */
 		pinfo->bpp = 16;
+<<<<<<< HEAD
 		pinfo->fb_num = 2;
         	pinfo->clk_rate = 192000000;
 	    	pinfo->clk_min = 192000000;
 	    	pinfo->clk_max = 192000000;
+=======
+		pinfo->fb_num = 4;
+        pinfo->clk_rate = 192000000;
+	    pinfo->clk_min = 192000000;
+	    pinfo->clk_max = 192000000;
+>>>>>>> 8da2a6c... Some debugging
         MDDI_LCD_DEBUG("%s: BYD LCD and Truly LCD,set MDDI_CLK=%d \n",__func__, pinfo->clk_rate);
 		pinfo->lcd.vsync_enable = FALSE;
 /* Reduce the fps,sync depend on the vsync signal*/
+<<<<<<< HEAD
         	pinfo->lcd.refx100 = 4000;
+=======
+        pinfo->lcd.refx100 = 6118;
+>>>>>>> 8da2a6c... Some debugging
 		pinfo->lcd.v_back_porch = 0;
 		pinfo->lcd.v_front_porch = 0;
 		pinfo->lcd.v_pulse_width = 22;
