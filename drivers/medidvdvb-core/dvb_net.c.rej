@@ -1,0 +1,10 @@
+--- drivers/medidvdvb-core/dvb_net.c
++++ drivers/medidvdvb-core/dvb_net.c
+@@ -504,6 +504,7 @@
+ 				       "bytes left in TS.  Resyncing.\n", ts_remain);
+ 				priv->ule_sndu_len = 0;
+ 				priv->need_pusi = 1;
++				ts += TS_SZ;
+ 				continue;
+ 			}
+ 
