@@ -377,7 +377,13 @@ msmrtc_alarmtimer_expired(unsigned long _data)
 
 static void process_cb_request(void *buffer)
 {
+<<<<<<< HEAD
+=======
+	struct timespec ts, tv;
+>>>>>>> 2e1d7ed... RTC: rtc-msm: Fix uptime corruption due to slow clock overflow.
 	struct rtc_cb_recv *rtc_cb = buffer;
+	
+	int64_t sclk_max;
 
 	rtc_cb->client_cb_id = be32_to_cpu(rtc_cb->client_cb_id);
 	rtc_cb->event = be32_to_cpu(rtc_cb->event);
@@ -397,6 +403,32 @@ static void process_cb_request(void *buffer)
 			rtc_cb->cb_info_data.tod_update.stamp,
 			rtc_cb->cb_info_data.tod_update.freq);
 		/* Do an update of xtime */
+<<<<<<< HEAD
+=======
+		
+		getnstimeofday(&ts);
+		
+		if (atomic_read(&suspend_state.state)) {
+		    int64_t now, sleep;
+		    now = msm_timer_get_sclk_time(&sclk_max);
+		    
+		    if (now && suspend_state.tick_at_suspend) {
+			if (now < suspend_state.tick_at_suspend) {
+				sleep = sclk_max -
+					suspend_state.tick_at_suspend + now;
+			} else {
+				sleep = now - suspend_state.tick_at_suspend;
+			}
+			timespec_add_ns(&ts, sleep);
+		    }
+		    else
+			pr_err("%s: Invalid ticks from SCLK"
+				"now=%lld tick_at_suspend=%lld",
+				__func__, now,
+				suspend_state.tick_at_suspend);
+		}
+		
+>>>>>>> 2e1d7ed... RTC: rtc-msm: Fix uptime corruption due to slow clock overflow.
 		rtc_hctosys();
 	} else
 		pr_err("%s: Unknown event EVENT=%x\n",
