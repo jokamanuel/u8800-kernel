@@ -157,6 +157,7 @@ update_ts_time_stats(struct tick_sched *ts, ktime_t now, u64 *last_update_time)
 {
 	ktime_t delta;
 	
+<<<<<<< HEAD
        ts->idle_lastupdate = now;
   
   if (ts->idle_active) {
@@ -169,6 +170,16 @@ update_ts_time_stats(struct tick_sched *ts, ktime_t now, u64 *last_update_time)
     *last_update_time = ktime_to_us(ts->idle_lastupdate);
   else
     *last_update_time = ktime_to_us(now);
+=======
+	if (ts->idle_active) {
+		delta = ktime_sub(now, ts->idle_entrytime);
+		ts->idle_sleeptime = ktime_add(ts->idle_sleeptime, delta);
+		ts->idle_entrytime = now;
+	}
+	
+	if (last_update_time)
+		*last_update_time = ktime_to_us(now);
+>>>>>>> 8b35716... sched: Eliminate the ts->idle_lastupdate field
 }
 
 static void tick_nohz_stop_idle(int cpu, ktime_t now)
