@@ -91,6 +91,10 @@ static void __exit_signal(struct task_struct *tsk)
 	if (atomic_dec_and_test(&sig->count))
 		posix_cpu_timers_exit_group(tsk);
 	else {
+
+	if (unlikely(has_group_leader_pid(tsk)))
+      		posix_cpu_timers_exit_group(tsk);	
+
 		/*
 		 * If there is any task waiting for the group exit
 		 * then notify it:
