@@ -323,12 +323,12 @@ CHECK		= sparse
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
-MODFLAGS	= -DMODULE -march=armv7-a -mfpu=neon -ftree-vectorize -pipe
-CFLAGS_MODULE   = $(MODFLAGS) -fno-pic
-AFLAGS_MODULE   = $(MODFLAGS)
+MODFLAGS	= -DMODULE 
+CFLAGS_MODULE   = $(MODFLAGS) -fgcse -fsched-spec-load-dangerous -fforce-addr -ffast-math -funsafe-math-optimizations -fsingle-precision-constant -mtune=cortex-a8 -march=armv7-a -mfpu=vfpv3 -ftree-vectorize -pipe
+AFLAGS_MODULE   = $(MODFLAGS) -fgcse -fsched-spec-load-dangerous -fforce-addr -ffast-math -funsafe-math-optimizations -fsingle-precision-constant -mtune=cortex-a8 -march=armv7-a -mfpu=vfpv3 -ftree-vectorize -pipe
 LDFLAGS_MODULE  = -T $(srctree)/scripts/module-common.lds
-CFLAGS_KERNEL	= -O1 -mtune=cortex-a8 -ftree-vectorize -ffast-math -fsingle-precision-constant -march=armv7-a -mfpu=neon -funsafe-loop-optimizations -pipe
-AFLAGS_KERNEL	= -O1 -mtune=cortex-a8 -ftree-vectorize -ffast-math -fsingle-precision-constant -march=armv7-a -mfpu=neon -funsafe-loop-optimizations -pipe
+CFLAGS_KERNEL	= -fgcse -fsched-spec-load-dangerous -fforce-addr -ffast-math -funsafe-math-optimizations -fsingle-precision-constant -mtune=cortex-a8 -march=armv7-a -mfpu=vfpv3 -ftree-vectorize -pipe
+AFLAGS_KERNEL	= -fgcse -fsched-spec-load-dangerous -fforce-addr -ffast-math -funsafe-math-optimizations -fsingle-precision-constant -mtune=cortex-a8 -march=armv7-a -mfpu=vfpv3 -ftree-vectorize -pipe
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
