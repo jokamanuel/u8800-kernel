@@ -529,11 +529,11 @@ void mdp_pipe_ctrl(MDP_BLOCK_TYPE block, MDP_BLOCK_POWER_STATE state,
 				/* turn off MDP clks */
 				if (mdp_clk != NULL) {
 					clk_disable(mdp_clk);
-					MSM_FB_DEBUG("MDP CLK OFF\n");
+					//MSM_FB_DEBUG("MDP CLK OFF\n");
 				}
 				if (mdp_pclk != NULL) {
 					clk_disable(mdp_pclk);
-					MSM_FB_DEBUG("MDP PCLK OFF\n");
+					//MSM_FB_DEBUG("MDP PCLK OFF\n");
 				}
 			} else {
 				/* send workqueue to turn off mdp power */
@@ -546,11 +546,11 @@ void mdp_pipe_ctrl(MDP_BLOCK_TYPE block, MDP_BLOCK_POWER_STATE state,
 			/* turn on MDP clks */
 			if (mdp_clk != NULL) {
 				clk_enable(mdp_clk);
-				MSM_FB_DEBUG("MDP CLK ON\n");
+				//MSM_FB_DEBUG("MDP CLK ON\n");
 			}
 			if (mdp_pclk != NULL) {
 				clk_enable(mdp_pclk);
-				MSM_FB_DEBUG("MDP PCLK ON\n");
+				//MSM_FB_DEBUG("MDP PCLK ON\n");
 			}
 		}
 		up(&mdp_pipe_ctrl_mutex);
