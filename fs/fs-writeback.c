@@ -888,6 +888,9 @@ static long wb_check_old_data_flush(struct bdi_writeback *wb)
 {
 	unsigned long expired;
 	long nr_pages;
+	
+	if (!dirty_writeback_interval)
+	    return 0;
 
 	/*
 	 * When set to zero, disable periodic writeback
@@ -991,6 +994,7 @@ int bdi_writeback_task(struct bdi_writeback *wb)
 				break;
 		}
 
+<<<<<<< HEAD
                 set_current_state(TASK_INTERRUPTIBLE);
                 if (!list_empty(&bdi->work_list) || kthread_should_stop()) {
                         __set_current_state(TASK_RUNNING);
@@ -1003,6 +1007,14 @@ int bdi_writeback_task(struct bdi_writeback *wb)
 		} else
 			schedule();
 
+=======
+		if (dirty_writeback_interval) {
+		    wait_jiffies = msecs_to_jiffies(dirty_writeback_interval * 10);
+		    schedule_timeout_interruptible(wait_jiffies);
+		}
+		else
+		    schedule();
+>>>>>>> 40682a5... writeback: disable periodic old data writeback for \!dirty_writeback_centisecs
 		try_to_freeze();
 	}
 
