@@ -285,11 +285,23 @@ struct global_attr {
 			 const char *c, size_t count);
 };
 
+#define define_one_global_ro(_name)             \
+static struct global_attr _name =               \
+__ATTR(_name, 0444, show_##_name, NULL)
+
+#define define_one_global_rw(_name)             \
+static struct global_attr _name =               \
+__ATTR(_name, 0644, show_##_name, store_##_name)
+
+
 /*********************************************************************
  *                        CPUFREQ 2.6. INTERFACE                     *
  *********************************************************************/
 int cpufreq_get_policy(struct cpufreq_policy *policy, unsigned int cpu);
 int cpufreq_update_policy(unsigned int cpu);
+
+ssize_t cpufreq_direct_store_scaling_setspeed(unsigned int cpu, const char *buf, size_t count);
+int cpufreq_direct_set_policy(unsigned int cpu, const char *buf);
 
 #ifdef CONFIG_CPU_FREQ
 /* query the current CPU frequency (in kHz). If zero, cpufreq couldn't detect it */
@@ -338,15 +350,9 @@ extern struct cpufreq_governor cpufreq_gov_ondemand;
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_CONSERVATIVE)
 extern struct cpufreq_governor cpufreq_gov_conservative;
 #define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_conservative)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SMARTASS)
-extern struct cpufreq_governor cpufreq_gov_smartass;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_smartass)
-#elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_SMOOTHASS)	
-extern struct cpufreq_governor cpufreq_gov_smoothass;
-#define CPUFREQ_DEFAULT_GOVERNOR  (&cpufreq_gov_smoothass)
 #elif defined(CONFIG_CPU_FREQ_DEFAULT_GOV_INTERACTIVE)
 extern struct cpufreq_governor cpufreq_gov_interactive;
-#define CPUFREQ_DEFAULT_GOVERNOR	(&cpufreq_gov_interactive)
+#define CPUFREQ_DEFAULT_GOVERNOR        (&cpufreq_gov_interactive)
 #endif
 
 
@@ -377,7 +383,8 @@ int cpufreq_frequency_table_target(struct cpufreq_policy *policy,
 
 /* the following 3 funtions are for cpufreq core use only */
 struct cpufreq_frequency_table *cpufreq_frequency_get_table(unsigned int cpu);
-struct cpufreq_policy *cpufreq_cpu_get(unsigned int cpu);
+struct cpufreq_policy *cpufreq_cpu_get(unsigned int cpu);ssize_t cpufreq_direct_store_scaling_setspeed(unsigned int cpu, const char *buf, size_t count);
+int cpufreq_direct_set_policy(unsigned int cpu, const char *buf);
 void   cpufreq_cpu_put (struct cpufreq_policy *data);
 
 /* the following are really really optional */
