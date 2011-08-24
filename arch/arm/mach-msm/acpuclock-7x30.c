@@ -59,6 +59,16 @@ struct clock_state {
 	struct mutex			lock;
 	uint32_t			acpu_switch_time_us;
 	uint32_t			vdd_switch_time_us;
+<<<<<<< HEAD
+=======
+};
+
+struct pll {
+	unsigned int l;
+	unsigned int m;
+	unsigned int n;
+	unsigned int pre_div;
+>>>>>>> d4b5216... Fix ebi1 rate setting
 };
 
 struct clkctl_acpu_speed {
@@ -245,9 +255,15 @@ int acpuclk_set_rate(int cpu, unsigned long rate, enum setrate_reason reason)
 	/* Increase the AXI bus frequency if needed. This must be done before
 	 * increasing the ACPU frequency, since voting for high AXI rates
 	 * implicitly takes care of increasing the MSMC1 voltage, as needed. */
+<<<<<<< HEAD
 	if (tgt_s->axi_clk_khz > strt_s->axi_clk_khz) {
 		rc = ebi1_clk_set_min_rate(CLKVOTE_ACPUCLK,
 						tgt_s->axi_clk_khz * 1000);
+=======
+	if (tgt_s->axi_clk_hz > strt_s->axi_clk_hz) {
+		rc = ebi1_clk_set_min_rate(CLKVOTE_ACPUCLK,
+					tgt_s->axi_clk_hz);
+>>>>>>> d4b5216... Fix ebi1 rate setting
 		if (rc < 0) {
 			pr_err("Setting AXI min rate failed (%d)\n", rc);
 			goto out;
@@ -276,9 +292,15 @@ int acpuclk_set_rate(int cpu, unsigned long rate, enum setrate_reason reason)
 	}
 
 	/* Decrease the AXI bus frequency if we can. */
+<<<<<<< HEAD
 	if (tgt_s->axi_clk_khz < strt_s->axi_clk_khz) {
 		res = ebi1_clk_set_min_rate(CLKVOTE_ACPUCLK,
 						tgt_s->axi_clk_khz * 1000);
+=======
+	if (tgt_s->axi_clk_hz < strt_s->axi_clk_hz) {
+		res = ebi1_clk_set_min_rate(CLKVOTE_ACPUCLK,
+					tgt_s->axi_clk_hz);
+>>>>>>> d4b5216... Fix ebi1 rate setting
 		if (res < 0)
 			pr_warning("Setting AXI min rate failed (%d)\n", res);
 	}
@@ -342,6 +364,10 @@ static void __init acpuclk_init(void)
 	uint32_t div, sel, src_num;
 	uint32_t reg_clksel, reg_clkctl;
 	int res;
+<<<<<<< HEAD
+=======
+	u8 pll2_l = readl(PLL2_L_VAL_ADDR) & 0xFF;
+>>>>>>> d4b5216... Fix ebi1 rate setting
 
 	reg_clksel = readl(SCSS_CLK_SEL_ADDR);
 
@@ -397,7 +423,12 @@ static void __init acpuclk_init(void)
 	if (s->src >= 0)
 		pll_enable(s->src);
 
+<<<<<<< HEAD
 	res = ebi1_clk_set_min_rate(CLKVOTE_ACPUCLK, s->axi_clk_khz * 1000);
+=======
+	res = ebi1_clk_set_min_rate(CLKVOTE_ACPUCLK, s->axi_clk_hz);
+
+>>>>>>> d4b5216... Fix ebi1 rate setting
 	if (res < 0)
 		pr_warning("Setting AXI min rate failed!\n");
 
