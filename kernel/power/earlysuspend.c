@@ -80,7 +80,6 @@ static void early_suspend(struct work_struct *work)
 	unsigned long irqflags;
 	int abort = 0;
 
-	printk("early_suspend e\n");
 	mutex_lock(&early_suspend_lock);
 	spin_lock_irqsave(&state_lock, irqflags);
 	if (state == SUSPEND_REQUESTED)
@@ -119,7 +118,6 @@ abort:
 	if (state == SUSPEND_REQUESTED_AND_SUSPENDED)
 		wake_unlock(&main_wake_lock);
 	spin_unlock_irqrestore(&state_lock, irqflags);
-	printk("early_suspend x\n");
 }
 
 static void late_resume(struct work_struct *work)
@@ -128,7 +126,6 @@ static void late_resume(struct work_struct *work)
 	unsigned long irqflags;
 	int abort = 0;
 
-	printk("late_resume e\n");
 	mutex_lock(&early_suspend_lock);
 	spin_lock_irqsave(&state_lock, irqflags);
 	if (state == SUSPENDED)
@@ -188,7 +185,6 @@ void request_suspend_state(suspend_state_t new_state)
 	} else if (old_sleep && new_state == PM_SUSPEND_ON) {
 		state &= ~SUSPEND_REQUESTED;
 		wake_lock(&main_wake_lock);
-		printk("queue_work\n");
 		queue_work(suspend_work_queue, &late_resume_work);
 	}
 	requested_suspend_state = new_state;
