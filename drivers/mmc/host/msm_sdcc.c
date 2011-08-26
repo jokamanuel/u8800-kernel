@@ -1355,6 +1355,7 @@ msmsdcc_platform_sdiowakeup_irq(int irq, void *dev_id)
 		host->sdio_irq_disabled = 1;
 	}
 	// wifi sometimes gets stuck in a state where it immediately wakes the device up
+<<<<<<< HEAD
  	// if we see 10 consecutive short sleeps (<= 2 secs) call the early resume/suspend handlers
  	// to fix it
  	if(msm_rtc_sleep_duration<=2)
@@ -1364,6 +1365,22 @@ msmsdcc_platform_sdiowakeup_irq(int irq, void *dev_id)
  	if(count_short_sleeps>10)
  	  schedule_work(&full_wake_work);
  	  
+=======
+	// if we see 10 consecutive short sleeps (<= 2 secs) call the early resume/suspend handlers
+	// to fix it
+
+	if(msm_rtc_sleep_duration<=2)
+		count_short_sleeps++;
+	else
+		count_short_sleeps=0;
+
+	if(count_short_sleeps>10) {
+		printk("SDIO Wake up bug triggered\n");
+//		schedule_work(&full_wake_work);
+		count_short_sleeps=0;
+	}
+
+>>>>>>> 8940e40... vote for msmc
 	spin_unlock(&host->lock);
 	//pr_info("%s: SDIO Wake up exit : %d \n", __func__, gpio_get_value(118));
 
