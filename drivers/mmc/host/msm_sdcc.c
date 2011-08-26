@@ -1327,20 +1327,8 @@ extern long int msm_rtc_sleep_duration;
 // this takes effect when the resume handlers have all been called
 // but must be done after they have started
 static void full_wake(struct work_struct *work) {
-<<<<<<< HEAD
-	printk("sdcc_full_wake start\n");
-	msleep(full_wake_delay);
- 	if(full_wake_duration!=-1 && get_suspend_state()==3) {
-		printk("sdcc_full_wake wakeup\n");
-		request_suspend_state(0);
-		msleep(full_wake_duration);
-		printk("sdcc_full_wake sleep\n");
-		request_suspend_state(3);
-	}
-=======
 	printk("sdcc_full_wake sleep\n");
 	request_suspend_state(3);
->>>>>>> 41d0b43... Fix the wifi bug handler
 }
 
 static int count_short_sleeps=0;
@@ -1361,22 +1349,7 @@ msmsdcc_platform_sdiowakeup_irq(int irq, void *dev_id)
 		}
 		host->sdio_irq_disabled = 1;
 	}
-<<<<<<< HEAD
-	// wifi sometimes gets stuck in a state where it immediately wakes the device up
-<<<<<<< HEAD
- 	// if we see 10 consecutive short sleeps (<= 2 secs) call the early resume/suspend handlers
- 	// to fix it
- 	if(msm_rtc_sleep_duration<=2)
- 	  count_short_sleeps++;
- 	else
- 	  count_short_sleeps=0;
- 	if(count_short_sleeps>10)
- 	  schedule_work(&full_wake_work);
- 	  
-=======
-=======
 	// wifi sometimes gets stuck in a state where it immediately wakes the device up.
->>>>>>> 41d0b43... Fix the wifi bug handler
 	// if we see 10 consecutive short sleeps (<= 2 secs) call the early resume/suspend handlers
 	// to fix it
 
@@ -1392,9 +1365,8 @@ msmsdcc_platform_sdiowakeup_irq(int irq, void *dev_id)
 		count_short_sleeps=0;
 	}
 
->>>>>>> 8940e40... vote for msmc
 	spin_unlock(&host->lock);
-	//pr_info("%s: SDIO Wake up exit : %d \n", __func__, gpio_get_value(118));
+//	pr_info("%s: SDIO Wake up exit : %d \n", __func__, gpio_get_value(118));
 
 	return IRQ_HANDLED;
 }
