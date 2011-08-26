@@ -90,7 +90,7 @@ static unsigned long down_rate_us;
  * When ramping up frequency with no idle cycles jump to at least this frequency.
  * Zero disables. Set a very high value to jump to policy max freqeuncy.
  */
-#define DEFAULT_UP_MIN_FREQ 0
+#define DEFAULT_UP_MIN_FREQ 2000000
 static unsigned int up_min_freq;
 
 /*
