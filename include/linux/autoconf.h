@@ -1,7 +1,7 @@
 /*
  * Automatically generated C config: don't edit
  * Linux kernel version: 2.6.32.9
- * Thu Aug 25 04:53:07 2011
+ * Fri Aug 26 02:16:40 2011
  */
 #define AUTOCONF_INCLUDED
 #define CONFIG_VIDEO_V4L1_COMPAT 1
@@ -344,7 +344,6 @@
 #define CONFIG_SYSCTL_SYSCALL 1
 #define CONFIG_SND_JACK 1
 #define CONFIG_USB_VIDEO_CLASS_INPUT_EVDEV 1
-#define CONFIG_CPU_FREQ_GOV_INTERACTIVE 1
 #define CONFIG_MSM_IDLE_STATS_BUCKET_COUNT 10
 #define CONFIG_USB_STORAGE 1
 #define CONFIG_NET_SCH_SFB 1
