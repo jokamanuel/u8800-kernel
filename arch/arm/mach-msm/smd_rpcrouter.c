@@ -989,7 +989,7 @@ static void do_read_data(struct work_struct *work)
 	if (rr_read(xprt_info, frag->data, hdr.size)) {
 		kfree(frag);
 		goto fail_io;
-
+	}
 #if defined(CONFIG_MSM_ONCRPCROUTER_DEBUG)
 	if ((smd_rpcrouter_debug_mask & RAW_PMR) &&
 	    ((pm >> 30 & 0x1) || (pm >> 31 & 0x1))) {
