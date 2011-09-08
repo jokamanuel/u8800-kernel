@@ -1556,6 +1556,12 @@ struct task_struct {
 	unsigned long stack_start;
 };
 
+/* Anyone feel like implementing this? */
+static inline int above_background_load(void)
+{
+  return 1;
+}
+
 /* Future-safe accessor for struct task_struct's cpus_allowed. */
 #define tsk_cpumask(tsk) (&(tsk)->cpus_allowed)
 
