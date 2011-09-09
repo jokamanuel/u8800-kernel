@@ -53,6 +53,10 @@ char snddev_name[AUDIO_DEV_CTL_MAX_DEV][44];
 static int device_index; /* Count of Device controls */
 static int simple_control; /* Count of simple controls*/
 
+static int headset_mic_switch = 0;
+
+module_param(headset_mic_switch,int,00644);
+
 static int msm_scontrol_count_info(struct snd_kcontrol *kcontrol,
 				struct snd_ctl_elem_info *uinfo)
 {
@@ -327,6 +331,7 @@ static int msm_device_put(struct snd_kcontrol *kcontrol,
 	
 	set = ucontrol->value.integer.value[0];
 	route_cfg.dev_id = ucontrol->id.numid - device_index;
+<<<<<<< HEAD
 	
 	if (route_cfg.dev_id == 3) {
 	  // this is needed for sure
@@ -335,6 +340,10 @@ static int msm_device_put(struct snd_kcontrol *kcontrol,
 	  route_cfg.dev_id = 10;
 	}
 	
+=======
+	if (headset_mic_switch && route_cfg.dev_id == 3)
+		route_cfg.dev_id=10;
+>>>>>>> 538a021... Add module parameter to force the use of the handset mic when a device is conencted to the headphone jack
 	dev_info = audio_dev_ctrl_find_dev(route_cfg.dev_id);
 	
 	if (IS_ERR(dev_info)) {
