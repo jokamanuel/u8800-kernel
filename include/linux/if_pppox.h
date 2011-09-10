@@ -76,6 +76,15 @@ struct sockaddr_pppol2tp {
 	struct pppol2tp_addr pppol2tp;
 }__attribute__ ((packed));
 
+/* The L2TPv3 protocol changes tunnel and session ids from 16 to 32
+ * bits. So we need a different sockaddr structure.
+ */
+struct sockaddr_pppol2tpv3 {
+	sa_family_t     sa_family;      /* address family, AF_PPPOX */
+	unsigned int    sa_protocol;    /* protocol identifier */
+	struct pppol2tpv3_addr pppol2tp;
+} __attribute__ ((packed));
+
 /*********************************************************************
  *
  * ioctl interface for defining forwarding of connections
@@ -146,19 +155,21 @@ struct pppoe_opt {
 };
 
 struct pppolac_opt {
-	__u32	local;
-	__u32	remote;
-	__u16	sequence;
-	__u8	sequencing;
-	int	(*backlog_rcv)(struct sock *sk_udp, struct sk_buff *skb);
+	__u32		local;
+	__u32		remote;
+	__u32		recv_sequence;
+	__u32		xmit_sequence;
+	atomic_t	sequencing;
+	int		(*backlog_rcv)(struct sock *sk_udp, struct sk_buff *skb);
 };
 
 struct pppopns_opt {
-	__u16	local;
-	__u16	remote;
-	__u32	sequence;
-	void	(*data_ready)(struct sock *sk_raw, int length);
-	int	(*backlog_rcv)(struct sock *sk_raw, struct sk_buff *skb);
+	__u16		local;
+	__u16		remote;
+	__u32		recv_sequence;
+	__u32		xmit_sequence;
+	void		(*data_ready)(struct sock *sk_raw, int length);
+	int		(*backlog_rcv)(struct sock *sk_raw, struct sk_buff *skb);
 };
 
 #include <net/sock.h>
