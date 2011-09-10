@@ -1,3 +1,5 @@
+// Modified by stockwell and Kimmo Satta (ksatta)
+
 /* Copyright (c) 2008-2010, Code Aurora Forum. All rights reserved.
  *
  * All source code in this file is licensed under the following license except
@@ -53,7 +55,7 @@ char snddev_name[AUDIO_DEV_CTL_MAX_DEV][44];
 static int device_index; /* Count of Device controls */
 static int simple_control; /* Count of simple controls*/
 
-static int headset_mic_switch = 0;
+static int headset_mic_switch = 1; // use phone's mic by default
 
 module_param(headset_mic_switch,int,00644);
 
@@ -260,8 +262,13 @@ static int msm_voice_put(struct snd_kcontrol *kcontrol,
 
 	/* Tx Device Routing */
 	tx_dev_id = ucontrol->value.integer.value[1];
+
+	if (headset_mic_switch && tx_dev_id == 3)
+	  tx_dev_id = 10;
+
 	tx_dev_info = audio_dev_ctrl_find_dev(tx_dev_id);
 
+	
 	if (IS_ERR(tx_dev_info)) {
 		MM_ERR("pass invalid dev_id\n");
 		rc = PTR_ERR(tx_dev_info);
@@ -322,8 +329,10 @@ static int msm_device_put(struct snd_kcontrol *kcontrol,
 
 	set = ucontrol->value.integer.value[0];
 	route_cfg.dev_id = ucontrol->id.numid - device_index;
+	
 	if (headset_mic_switch && route_cfg.dev_id == 3)
 		route_cfg.dev_id=10;
+	
 	dev_info = audio_dev_ctrl_find_dev(route_cfg.dev_id);
 	if (IS_ERR(dev_info)) {
 		MM_ERR("pass invalid dev_id\n");
