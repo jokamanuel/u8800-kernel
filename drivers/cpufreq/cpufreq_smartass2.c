@@ -162,14 +162,14 @@ static int cpufreq_governor_smartass(struct cpufreq_policy *policy,
 static
 #endif
 struct cpufreq_governor cpufreq_gov_smartass2 = {
-	.name = "SmartassV2",
-	.governor = cpufreq_governor_smartass,
+  .name = "smartassV2",
+  .governor = cpufreq_governor_smartass,
 #if defined(CONFIG_ARCH_MSM_SCORPION)
-	.max_transition_latency = 8000000,
+  .max_transition_latency = 8000000,
 #else
-	.max_transition_latency = 9000000,
+  .max_transition_latency = 9000000,
 #endif
-	.owner = THIS_MODULE,
+  .owner = THIS_MODULE,
 };
 
 inline static void smartass_update_min_max(struct smartass_info_s *this_smartass, struct cpufreq_policy *policy, int suspend) {
