@@ -1197,18 +1197,19 @@ msmsdcc_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
 
 int msmsdcc_set_pwrsave(struct mmc_host *mmc, int pwrsave)
 {
-	struct msmsdcc_host *host = mmc_priv(mmc);
-	u32 clk;
+         struct msmsdcc_host *host = mmc_priv(mmc);
+         u32 clk;
 
-	clk = readl(host->base + MMCICLOCK);
-	pr_debug("Changing to pwr_save=%d", pwrsave);
-	if (pwrsave && msmsdcc_is_pwrsave(host))
-		clk |= MCI_CLK_PWRSAVE;
-	else
-		clk &= ~MCI_CLK_PWRSAVE;
-	writel(clk, host->base + MMCICLOCK);
+         clk = readl_relaxed(host->base + MMCICLOCK);
+         pr_debug("Changing to pwr_save=%d", pwrsave);
+         if (pwrsave && msmsdcc_is_pwrsave(host))
+                 clk |= MCI_CLK_PWRSAVE;
+         else
+                 clk &= ~MCI_CLK_PWRSAVE;
+         writel_relaxed(clk, host->base + MMCICLOCK);
+         dsb();
 
-	return 0;
+         return 0;
 }
 
 static int msmsdcc_get_ro(struct mmc_host *mmc)
@@ -1227,33 +1228,39 @@ static int msmsdcc_get_ro(struct mmc_host *mmc)
 
 #ifdef CONFIG_MMC_MSM_SDIO_SUPPORT
 static void msmsdcc_enable_sdio_irq(struct mmc_host *mmc, int enable)
-{
-	struct msmsdcc_host *host = mmc_priv(mmc);
+{ 
+         struct msmsdcc_host *host = mmc_priv(mmc);
+         unsigned long flags;
 
-	if (enable) {
-		host->mci_irqenable |= MCI_SDIOINTOPERMASK;
-		writel(readl(host->base + MMCIMASK0) | MCI_SDIOINTOPERMASK,
-			       host->base + MMCIMASK0);
-	} else {
-		host->mci_irqenable &= ~MCI_SDIOINTOPERMASK;
-		writel(readl(host->base + MMCIMASK0) & ~MCI_SDIOINTOPERMASK,
-		       host->base + MMCIMASK0);
-	}
+         if (enable) {
+                 spin_lock_irqsave(&host->lock, flags);
+                 host->mci_irqenable |= MCI_SDIOINTOPERMASK;
+                 writel_relaxed(readl_relaxed(host->base + MMCIMASK0) |
+                                 MCI_SDIOINTOPERMASK, host->base + MMCIMASK0);
+                 spin_unlock_irqrestore(&host->lock, flags);
+         } else {
+                 host->mci_irqenable &= ~MCI_SDIOINTOPERMASK;
+                 writel_relaxed(readl_relaxed(host->base + MMCIMASK0) &
+                                 ~MCI_SDIOINTOPERMASK, host->base + MMCIMASK0);
+         }
+         dsb();
 }
 #endif /* CONFIG_MMC_MSM_SDIO_SUPPORT */
 
 static int msmsdcc_enable(struct mmc_host *mmc)
 {
-	int rc;
+	int rc = 0;
+        struct device *dev = mmc->parent;
 
-	rc = pm_runtime_get_sync(mmc->parent);
+        if (pm_runtime_suspended(dev))
+                rc = pm_runtime_get_sync(dev);
+        else
+                pm_runtime_get_noresume(dev);
 
-	if (rc < 0) {
-		pr_info("%s: %s: failed with error %d", mmc_hostname(mmc),
-				__func__, rc);
-		return rc;
-	}
-	return 0;
+        if (rc < 0)
+                 pr_info("%s: %s: failed with error %d", mmc_hostname(mmc),
+                                __func__, rc);
+        return rc;
 }
 
 static int msmsdcc_disable(struct mmc_host *mmc, int lazy)
