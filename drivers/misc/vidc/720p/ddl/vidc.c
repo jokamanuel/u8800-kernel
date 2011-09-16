@@ -21,6 +21,7 @@
 #include "vidc_type.h"
 #include "vidc.h"
 
+#undef DEBUG
 #if DEBUG
 #define DBG(x...) printk(KERN_DEBUG x)
 #else
