@@ -112,13 +112,13 @@ static struct pll pll2_tbl[] = {
  * know all the h/w requirements.
  */
 static struct clkctl_acpu_speed acpu_freq_tbl[] = {
-	{ 0, 24576,  SRC_LPXO, 0, 0,  30720000,  900, VDD_RAW(850), LOW },
-	{ 0, 61440,  PLL_3,    5, 11, 61440000,  900, VDD_RAW(850), LOW },
-	{ 1, 122880, PLL_3,    5, 5,  61440000,  725, VDD_RAW(725), LOW },
-	{ 1, 184320, PLL_3,    5, 4,  61440000,  750, VDD_RAW(750), LOW },
+	{ 0, 24576,  SRC_LPXO, 0, 0,  30720000,  850, VDD_RAW(850), LOW },
+	{ 0, 61440,  PLL_3,    5, 11, 61440000,  850, VDD_RAW(850), LOW },
+	{ 0, 122880, PLL_3,    5, 5,  61440000,  775, VDD_RAW(775), LOW },
+	{ 1, 184320, PLL_3,    5, 4,  61440000,  800, VDD_RAW(800), LOW },
 	{ 0, MAX_AXI_KHZ, SRC_AXI, 1, 0, 61440000, 850, VDD_RAW(850), LOW },
-	{ 1, 245760, PLL_3,    5, 2,  61440000,  850, VDD_RAW(850), LOW },
-	{ 1, 368640, PLL_3,    5, 1,  122800000, 875, VDD_RAW(875), LOW },
+	{ 1, 245760, PLL_3,    5, 2,  61440000,  875, VDD_RAW(875), LOW },
+	{ 1, 368640, PLL_3,    5, 1,  122800000, 900, VDD_RAW(900), LOW },
 	/* AXI has MSMC1 implications. See above. */
 	{ 1, 768000, PLL_1,    2, 0,  153600000, 950, VDD_RAW(950), NOMINAL },
 	/*
