@@ -100,6 +100,8 @@ static struct pll pll2_tbl[] = {
 	{  94, 0, 1, 0 }, /* 1804 MHz */
   	{  100, 0, 1, 0 }, /* 1920 MHz */
   	{  104, 0, 1, 0 }, /* 1997 MHz */
+	{  25, 0, 1, 0 }, /* 480 MHz */
+	{  31, 0, 1, 0 }, /* 600 MHz */
 };
 
 /* Use negative numbers for sources that can't be enabled/disabled */
@@ -119,6 +121,8 @@ static struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{ 0, MAX_AXI_KHZ, SRC_AXI, 1, 0, 61440000,  850,  VDD_RAW(850),  LOW },
 	{ 1, 245760,  PLL_3,    5, 2,    61440000,  850,  VDD_RAW(850),  LOW },
 	{ 1, 368640,  PLL_3,    5, 1,    122800000, 875,  VDD_RAW(875),  LOW },
+	{ 1, 480000,  PLL_2,    3, 0,    122800000, 900,  VDD_RAW(900),  NOMINAL, &pll2_tbl[9]},
+	{ 1, 600000,  PLL_2,    3, 0,    122800000, 925,  VDD_RAW(925),  NOMINAL, &pll2_tbl[10]},
 	{ 1, 768000,  PLL_1,    2, 0,    153600000, 950,  VDD_RAW(950),  NOMINAL },
 	{ 1, 806400,  PLL_2,    3, 0,    UINT_MAX,  975,  VDD_RAW(975),  NOMINAL, &pll2_tbl[0]},
 	{ 1, 1024000, PLL_2,    3, 0,    UINT_MAX,  1100, VDD_RAW(1100), NOMINAL, &pll2_tbl[1]},
@@ -126,7 +130,7 @@ static struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{ 1, 1401600, PLL_2,    3, 0,    UINT_MAX,  1250, VDD_RAW(1250), NOMINAL, &pll2_tbl[3]},
 	{ 1, 1516800, PLL_2,    3, 0,    UINT_MAX,  1300, VDD_RAW(1300), NOMINAL, &pll2_tbl[4]},
 	{ 1, 1612800, PLL_2,    3, 0,    UINT_MAX,  1350, VDD_RAW(1350), NOMINAL, &pll2_tbl[5]},
-	{ 1, 1804800, PLL_2,    3, 0,    UINT_MAX,  1400, VDD_RAW(1400), NOMINAL, &pll2_tbl[6]},
+	{ 1, 1804800, PLL_2,    3, 0,    UINT_MAX,  1350, VDD_RAW(1400), NOMINAL, &pll2_tbl[6]},
 /*  	{ 1, 1920000, PLL_2,    3, 0,    UINT_MAX,  1400, VDD_RAW(1400), NOMINAL, &pll2_tbl[7]},
   	{ 1, 1996800, PLL_2,    3, 0,    UINT_MAX,  1400, VDD_RAW(1400), NOMINAL, &pll2_tbl[8]},
 */
