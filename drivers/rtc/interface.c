@@ -21,9 +21,8 @@ int rtc_read_time(struct rtc_device *rtc, struct rtc_time *tm)
 
 	err = mutex_lock_interruptible(&rtc->ops_lock);
 	if (err)
-		return err;
-
-	if (!rtc->ops)
+		/* nothing */;
+        else if (!rtc->ops)
 		err = -ENODEV;
 	else if (!rtc->ops->read_time)
 		err = -EINVAL;
