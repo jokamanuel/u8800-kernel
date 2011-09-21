@@ -82,11 +82,7 @@ config CLEANCACHE
   	default y
 
 config COMPACTION
-   bool "Allow for memory compaction"
-   select MIGRATION
-   depends on EXPERIMENTAL && MMU
-   help
-     Allows the compaction of memory for the allocation of huge pages.
+	def_bool y
 
 #
 # Both the NUMA code and DISCONTIGMEM use arrays of pg_data_t's
