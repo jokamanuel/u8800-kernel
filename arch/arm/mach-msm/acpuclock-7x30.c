@@ -120,7 +120,7 @@ static struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{ 0, 122880,  PLL_3,    5, 5,    61440000,  850,  VDD_RAW(850),  LOW },
 	{ 0, 184320,  PLL_3,    5, 4,    61440000,  850,  VDD_RAW(850),  LOW },
 	{ 0, MAX_AXI_KHZ, SRC_AXI, 1, 0, 61440000,  850,  VDD_RAW(850),  LOW },
-	{ 1, 245760,  PLL_3,    5, 2,    61440000,  850,  VDD_RAW(850),  LOW },
+	{ 0, 245760,  PLL_3,    5, 2,    61440000,  850,  VDD_RAW(850),  LOW },
 	{ 1, 368640,  PLL_3,    5, 1,    122800000, 875,  VDD_RAW(875),  LOW },
 	{ 1, 480000,  PLL_2,    3, 0,    122800000, 900,  VDD_RAW(900),  NOMINAL, &pll2_tbl[0]},
 	{ 1, 544000,  PLL_2,    3, 0,    122800000, 900,  VDD_RAW(900), NOMINAL,  &pll2_tbl[1]},
