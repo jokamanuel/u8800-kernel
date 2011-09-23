@@ -1920,7 +1920,7 @@ void ddl_set_initial_default_values(struct ddl_client_context_type *p_ddl)
 	} else {
 		struct ddl_encoder_data_type *p_encoder =
 		    &(p_ddl->codec_data.encoder);
-		p_encoder->codec_type.e_codec = VCD_CODEC_H264;
+		p_encoder->codec_type.e_codec = VCD_CODEC_MPEG4;
 		vcd_fw_transact(TRUE, FALSE,
 			p_encoder->codec_type.e_codec);
 
