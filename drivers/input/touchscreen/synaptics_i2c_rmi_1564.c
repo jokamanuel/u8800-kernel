@@ -218,7 +218,7 @@ static void synaptics_rmi4_early_suspend(struct early_suspend *h);
 static void synaptics_rmi4_late_resume(struct early_suspend *h);
 #endif
 
-static int dup_threshold=0;
+static int dup_threshold=1;
 module_param(dup_threshold, int, 00644);
 
 static int debug=0;
