@@ -113,6 +113,12 @@ config CPU_FREQ_DEFAULT_GOV_SMARTASS2
   	help
     	  Use the CPUFreq governor 'smartassV2' as default.
 
+config CPU_FREQ_DEFAULT_GOV_MINMAX
+  	bool "minmax"
+  	select CPU_FREQ_GOV_MINMAX
+  	help
+    	  Use the CPUFreq governor 'Minmax' as default.
+
 config CPU_FREQ_DEFAULT_GOV_SMOOTHASS
  	bool "smoothass"
  	select CPU_FREQ_GOV_SMOOTHASS
