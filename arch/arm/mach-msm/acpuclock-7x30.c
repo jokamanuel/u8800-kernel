@@ -97,7 +97,6 @@ static struct pll pll2_tbl[] = {
 	{  20, 4, 5, 0 },	/* 400 MHz */
 	{  26, 2, 5, 0 },	/* 500 MHz */
 	{  31, 1, 4, 0 },	/* 600 MHz */
-	{  36, 11, 24, 0 },	/* 700 MHz */
 	{  41, 3, 5, 0 },	/* 800 MHz */
 	{  46, 7, 8, 0 },	/* 900 MHz */
 	{  52, 4, 5, 0 },	/* 1000 MHz */
@@ -127,22 +126,22 @@ static struct clkctl_acpu_speed acpu_freq_tbl[] = {
 	{ 0, 184320,  PLL_3,    5, 4,    61440000,  850,  VDD_RAW(850),  LOW },
 	{ 0, MAX_AXI_KHZ, SRC_AXI, 1, 0, 61440000,  850,  VDD_RAW(850),  LOW },
 	{ 0, 245760,  PLL_3,    5, 2,    61440000,  850,  VDD_RAW(850),  LOW },
-	{ 1, 300000,  PLL_2,    3, 0,    122800000, 850,  VDD_RAW(850),  NOMINAL, &pll2_tbl[1]},
-	{ 1, 400000,  PLL_2,    3, 0,    122800000, 875,  VDD_RAW(875),  NOMINAL, &pll2_tbl[2]},
-	{ 1, 500000,  PLL_2,    3, 0,    122800000, 900,  VDD_RAW(900),  NOMINAL, &pll2_tbl[3]},
-	{ 1, 600000,  PLL_2,    3, 0,    122800000, 925,  VDD_RAW(925),  NOMINAL, &pll2_tbl[4]},
-	{ 1, 700000,  PLL_2,    3, 0,    153600000, 950,  VDD_RAW(950),  NOMINAL, &pll2_tbl[5]},
-	{ 1, 800000,  PLL_2,    3, 0,    UINT_MAX,  975,  VDD_RAW(975),  NOMINAL, &pll2_tbl[6]},
-	{ 1, 900000,  PLL_2,    3, 0,    UINT_MAX,  1000, VDD_RAW(1000), NOMINAL, &pll2_tbl[7]},
-	{ 1, 1000000, PLL_2,    3, 0,    UINT_MAX,  1050, VDD_RAW(1050), NOMINAL, &pll2_tbl[8]},
-	{ 1, 1100000, PLL_2,    3, 0,    UINT_MAX,  1100, VDD_RAW(1100), NOMINAL, &pll2_tbl[9]},
-	{ 1, 1200000, PLL_2,    3, 0,    UINT_MAX,  1150, VDD_RAW(1150), NOMINAL, &pll2_tbl[10]},
-	{ 1, 1300000, PLL_2,    3, 0,    UINT_MAX,  1200, VDD_RAW(1200), NOMINAL, &pll2_tbl[11]},
-	{ 1, 1400000, PLL_2,    3, 0,    UINT_MAX,  1250, VDD_RAW(1250), NOMINAL, &pll2_tbl[12]},
-	{ 1, 1500000, PLL_2,    3, 0,    UINT_MAX,  1300, VDD_RAW(1300), NOMINAL, &pll2_tbl[13]},
-	{ 1, 1600000, PLL_2,    3, 0,    UINT_MAX,  1350, VDD_RAW(1350), NOMINAL, &pll2_tbl[14]},
-	{ 1, 1700000, PLL_2,    3, 0,    UINT_MAX,  1375, VDD_RAW(1375), NOMINAL, &pll2_tbl[15]},
-	{ 1, 1800000, PLL_2,    3, 0,    UINT_MAX,  1400, VDD_RAW(1400), NOMINAL, &pll2_tbl[16]},
+	{ 1, 300000,  PLL_2,    3, 0,    122800000, 850,  VDD_RAW(850),  NOMINAL, &pll2_tbl[0]},
+	{ 1, 400000,  PLL_2,    3, 0,    122800000, 875,  VDD_RAW(875),  NOMINAL, &pll2_tbl[1]},
+	{ 1, 500000,  PLL_2,    3, 0,    122800000, 900,  VDD_RAW(900),  NOMINAL, &pll2_tbl[2]},
+	{ 1, 600000,  PLL_2,    3, 0,    122800000, 925,  VDD_RAW(925),  NOMINAL, &pll2_tbl[3]},
+	{ 1, 768000,  PLL_1,    2, 0,    153600000, 950,  VDD_RAW(950),  NOMINAL },
+	{ 1, 800000,  PLL_2,    3, 0,    UINT_MAX,  975,  VDD_RAW(975),  NOMINAL, &pll2_tbl[4]},
+	{ 1, 900000,  PLL_2,    3, 0,    UINT_MAX,  1000, VDD_RAW(1000), NOMINAL, &pll2_tbl[5]},
+	{ 1, 1000000, PLL_2,    3, 0,    UINT_MAX,  1050, VDD_RAW(1050), NOMINAL, &pll2_tbl[6]},
+	{ 1, 1100000, PLL_2,    3, 0,    UINT_MAX,  1100, VDD_RAW(1100), NOMINAL, &pll2_tbl[7]},
+	{ 1, 1200000, PLL_2,    3, 0,    UINT_MAX,  1150, VDD_RAW(1150), NOMINAL, &pll2_tbl[8]},
+	{ 1, 1300000, PLL_2,    3, 0,    UINT_MAX,  1200, VDD_RAW(1200), NOMINAL, &pll2_tbl[9]},
+	{ 1, 1400000, PLL_2,    3, 0,    UINT_MAX,  1250, VDD_RAW(1250), NOMINAL, &pll2_tbl[10]},
+	{ 1, 1500000, PLL_2,    3, 0,    UINT_MAX,  1300, VDD_RAW(1300), NOMINAL, &pll2_tbl[11]},
+	{ 1, 1600000, PLL_2,    3, 0,    UINT_MAX,  1350, VDD_RAW(1350), NOMINAL, &pll2_tbl[12]},
+	{ 1, 1700000, PLL_2,    3, 0,    UINT_MAX,  1375, VDD_RAW(1375), NOMINAL, &pll2_tbl[13]},
+	{ 1, 1800000, PLL_2,    3, 0,    UINT_MAX,  1400, VDD_RAW(1400), NOMINAL, &pll2_tbl[14]},
 
 	{ 0 }
 };
