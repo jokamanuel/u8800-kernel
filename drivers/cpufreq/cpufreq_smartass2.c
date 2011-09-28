@@ -44,7 +44,7 @@
  * towards the ideal frequency and slower after it has passed it. Similarly,
  * lowering the frequency twards the ideal frequency is faster than below it.
  */
-#define DEFAULT_AWAKE_IDEAL_FREQ 768000
+#define DEFAULT_AWAKE_IDEAL_FREQ 300000
 static unsigned int awake_ideal_freq;
 
 /*
@@ -53,21 +53,21 @@ static unsigned int awake_ideal_freq;
  * that practically when sleep_ideal_freq==0 the awake_ideal_freq is used
  * also when suspended).
  */
-#define DEFAULT_SLEEP_IDEAL_FREQ 368640
+#define DEFAULT_SLEEP_IDEAL_FREQ 300000
 static unsigned int sleep_ideal_freq;
 
 /*
- * Freqeuncy delta when ramping up.
+ * Frequency delta when ramping up.
  * zero disables and causes to always jump straight to max frequency.
  */
-#define DEFAULT_RAMP_UP_STEP 256000
+#define DEFAULT_RAMP_UP_STEP 100000
 static unsigned int ramp_up_step;
 
 /*
  * Freqeuncy delta when ramping down.
  * zero disables and will calculate ramp down according to load heuristic.
  */
-#define DEFAULT_RAMP_DOWN_STEP 256000
+#define DEFAULT_RAMP_DOWN_STEP 100000
 static unsigned int ramp_down_step;
 
 /*
