@@ -27,36 +27,31 @@
  *
  */
 
-#ifndef VDEC_INTERNAL_H
-#define VDEC_INTERNAL_H
+#ifndef VIDC_INIT_INTERNAL_H
+#define VIDC_INIT_INTERNAL_H
 
-#include <linux/msm_vidc_dec.h>
 #include <linux/cdev.h>
-#include "vidc_init.h"
 
-#define VID_DEC_MAX_DECODER_CLIENTS 16
-
-struct vid_dec_msg {
+struct vidc_timer {
 	struct list_head list;
-	struct vdec_msginfo vdec_msg_info;
+	struct timer_list hw_timeout;
+	void (*cb_func)(void *);
+	void *userdata;
 };
 
-struct vid_dec_dev {
+struct vidc_dev {
 	struct cdev cdev;
 	struct device *device;
 	resource_size_t phys_base;
 	void __iomem *virt_base;
 	unsigned int irq;
-	struct clk *hclk;
-	struct clk *hclk_div2;
-	struct clk *pclk;
-	struct clk *vcodec_clk;
-	unsigned long hclk_rate;
+	unsigned int ref_count;
+	unsigned int firmware_refcount;
+	unsigned int get_firmware;
 	struct mutex lock;
 	s32 device_handle;
-	struct video_client_ctx vdec_clients[VID_DEC_MAX_DECODER_CLIENTS];
-	u32 num_clients;
-	void(*pf_timer_handler)(void *);
+	struct list_head vidc_timer_queue;
+	struct work_struct vidc_timer_worker;
 };
 
 #endif

@@ -27,8 +27,8 @@
  *
  */
 
-#ifndef VIDC_INIT_INTERNAL_H
-#define VIDC_INIT_INTERNAL_H
+#ifndef VIDEO_CORE_INIT_INTERNAL_H
+#define VIDEO_CORE_INIT_INTERNAL_H
 
 #include <linux/cdev.h>
 

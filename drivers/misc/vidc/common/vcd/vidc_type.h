@@ -26,37 +26,27 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+#ifndef VIDC_TYPE_H
+#define VIDC_TYPE_H
 
-#ifndef VDEC_INTERNAL_H
-#define VDEC_INTERNAL_H
+#include <linux/types.h>
+#include <linux/kernel.h>
+#include <linux/mutex.h>
+#include <linux/slab.h>
+#include <linux/string.h>
+#include <linux/list.h>
+#include <linux/time.h>
+#include <linux/dma-mapping.h>
+#include <linux/android_pmem.h>
 
-#include <linux/msm_vidc_dec.h>
-#include <linux/cdev.h>
-#include "vidc_init.h"
+#define TRUE 	1
+#define FALSE	0
 
-#define VID_DEC_MAX_DECODER_CLIENTS 16
+#define DEBUG   0
 
-struct vid_dec_msg {
-	struct list_head list;
-	struct vdec_msginfo vdec_msg_info;
-};
+#define USE_RES_TRACKER
+#define AXI_CLK_SCALING
 
-struct vid_dec_dev {
-	struct cdev cdev;
-	struct device *device;
-	resource_size_t phys_base;
-	void __iomem *virt_base;
-	unsigned int irq;
-	struct clk *hclk;
-	struct clk *hclk_div2;
-	struct clk *pclk;
-	struct clk *vcodec_clk;
-	unsigned long hclk_rate;
-	struct mutex lock;
-	s32 device_handle;
-	struct video_client_ctx vdec_clients[VID_DEC_MAX_DECODER_CLIENTS];
-	u32 num_clients;
-	void(*pf_timer_handler)(void *);
-};
+#undef CORE_TIMING_INFO
 
 #endif
